@@ -1,0 +1,86 @@
+.cartPage {
+    padding: 20px;
+  }
+  
+  .cartPage h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+  }
+  
+  .cartItemsContainer {
+    margin-bottom: 30px;
+  }
+  
+  .cartSummary {
+    border-top: 2px solid #eee;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .total {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 300px; /* Constrain total width */
+    margin-bottom: 20px;
+  }
+  
+  .total h3 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333;
+  }
+  
+  .total span {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #007bff;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .clearButton {
+    background-color: #6c757d; /* Grey */
+  }
+  
+  .clearButton:hover {
+    background-color: #5a6268;
+  }
+  
+  .checkoutButton {
+    background-color: #007bff; /* Blue */
+    text-decoration: none; /* For Link component acting as button */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .checkoutButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .emptyCart {
+    text-align: center;
+    padding: 50px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+  }
+  
+  .emptyCart h2 {
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  .emptyCart p {
+    color: #666;
+    margin-bottom: 25px;
+    font-size: 1.1em;
+  }

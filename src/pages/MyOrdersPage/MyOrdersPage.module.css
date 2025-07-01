@@ -1,0 +1,63 @@
+/* src/pages/MyOrdersPage/MyOrdersPage.module.css */
+.myOrdersPage {
+    padding: 30px;
+    text-align: center;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+  }
+  
+  .myOrdersPage h1 {
+    color: #333;
+    margin-bottom: 25px;
+  }
+  
+  .myOrdersPage p {
+    color: #666;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+  }
+  
+  .mockOrders {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+  }
+  
+  .orderCard {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    width: 280px;
+    background-color: #f9f9f9;
+    text-align: left;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  }
+  
+  .orderCard h3 {
+    color: #007bff;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+  }
+  
+  .orderCard p {
+    font-size: 0.95em;
+    margin-bottom: 5px;
+    color: #555;
+  }
+  
+  .orderCard ul {
+    list-style: disc;
+    margin-left: 20px;
+    padding: 0;
+    color: #777;
+  }
+  
+  .orderCard li {
+    margin-bottom: 3px;
+    font-size: 0.9em;
+  }

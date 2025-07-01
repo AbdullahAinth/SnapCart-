@@ -1,0 +1,121 @@
+.checkoutPage {
+    padding: 20px;
+  }
+  
+  .checkoutPage h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+  }
+  
+  .checkoutContent {
+    display: flex;
+    flex-wrap: wrap; /* Allows stacking on small screens */
+    gap: 40px;
+    justify-content: center;
+  }
+  
+  .orderSummary {
+    flex: 1;
+    min-width: 300px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: fit-content; /* Adjust height to content */
+  }
+  
+  .orderSummary h2 {
+    margin-top: 0;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .orderSummary ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+  
+  .orderSummary li {
+    padding: 8px 0;
+    border-bottom: 1px dotted #eee;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.05em;
+    color: #555;
+  }
+  
+  .orderSummary li:last-child {
+    border-bottom: none;
+  }
+  
+  .totalPrice {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 2px solid #eee;
+  }
+  
+  .totalPrice h3 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333;
+  }
+  
+  .totalPrice span {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #007bff;
+  }
+  
+  .checkoutForm {
+    flex: 2;
+    min-width: 400px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .checkoutForm h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+  }
+  
+  .formGroup {
+    margin-bottom: 20px;
+  }
+  
+  .formGroup label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .formGroup input[type="text"],
+  .formGroup input[type="email"],
+  .formGroup select {
+    width: calc(100% - 22px); /* Account for padding and border */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+  }
+  
+  .placeOrderButton {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2em;
+    background-color: #28a745;
+    margin-top: 20px;
+  }
+  
+  .placeOrderButton:hover {
+    background-color: #218838;
+  }
