@@ -94,7 +94,7 @@
   
   .itemSubtotal {
     font-weight: bold;
-    color: red;
+    color: var(--summary-text-color); /* ✨ Here */
     min-width: 120px;
   }
   
@@ -110,7 +110,7 @@
     align-items: center;
     gap: 20px;
     font-size: 1.5em;
-    color: red;
+    color: var(--summary-text-color); /* ✨ Here */
     margin-bottom: 20px;
   }
   
