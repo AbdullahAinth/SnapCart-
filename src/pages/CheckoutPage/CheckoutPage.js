@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import styles from './CheckoutPage.module.css';
 
 const CheckoutPage = () => {
-  const { cart, getTotalPrice, clearCart } = useCart();
+  const { cartItems, getCartTotalPrice, clearCart } = useCart();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -27,13 +27,13 @@ const CheckoutPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (cart.length === 0) {
+    if (!cartItems || cartItems.length === 0) {
       toast.error("Your cart is empty. Please add items before checking out.");
       return navigate('/');
     }
 
-    // Basic validation for required fields
     const { name, address, email, paymentMethod, cardNumber, expiryDate, cvv } = formData;
+
     if (!name.trim() || !address.trim() || !email.trim()) {
       return toast.error("Please fill out all required fields.");
     }
@@ -42,14 +42,14 @@ const CheckoutPage = () => {
       return toast.error("Please enter all credit card details.");
     }
 
-    // Mock order processing
-    console.log("Order placed:", {
-      items: cart,
-      total: getTotalPrice(),
-      customerInfo: formData,
+    // Mock order process
+    console.log("Order Placed:", {
+      items: cartItems,
+      total: getCartTotalPrice(),
+      customer: formData,
     });
 
-    toast.success("Order placed successfully! Thank you for your purchase.");
+    toast.success("Order placed successfully!");
     clearCart();
     navigate('/');
   };
@@ -60,20 +60,20 @@ const CheckoutPage = () => {
       <div className={styles.checkoutContent}>
         <div className={styles.orderSummary}>
           <h2>Order Summary</h2>
-          {cart.length === 0 ? (
+          {(!cartItems || cartItems.length === 0) ? (
             <p>Your cart is empty.</p>
           ) : (
             <ul>
-              {cart.map((item) => (
+              {cartItems.map((item) => (
                 <li key={item.id}>
-                  {item.title} (x{item.qty}) - ${item.price.toFixed(2)}
+                  {item.title} (x{item.quantity}) - ${item.price.toFixed(2)}
                 </li>
               ))}
             </ul>
           )}
           <div className={styles.totalPrice}>
             <h3>Total:</h3>
-            <span>${getTotalPrice().toFixed(2)}</span>
+            <span>${getCartTotalPrice().toFixed(2)}</span>
           </div>
         </div>
 
@@ -91,6 +91,7 @@ const CheckoutPage = () => {
               className={styles.input}
             />
           </div>
+
           <div className={styles.formGroup}>
             <label htmlFor="address">Address</label>
             <input
@@ -103,6 +104,7 @@ const CheckoutPage = () => {
               className={styles.input}
             />
           </div>
+
           <div className={styles.formGroup}>
             <label htmlFor="email">Email</label>
             <input
@@ -146,6 +148,7 @@ const CheckoutPage = () => {
                   required
                 />
               </div>
+
               <div className={styles.formGroup}>
                 <label htmlFor="expiryDate">Expiry Date</label>
                 <input
@@ -159,6 +162,7 @@ const CheckoutPage = () => {
                   required
                 />
               </div>
+
               <div className={styles.formGroup}>
                 <label htmlFor="cvv">CVV</label>
                 <input

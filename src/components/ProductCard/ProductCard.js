@@ -4,13 +4,18 @@ import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import styles from './ProductCard.module.css';
 import RatingStars from '../RatingStars/RatingStars';
+import toast from 'react-hot-toast';
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useCart();
 
   const handleAddToCart = (e) => {
-    e.preventDefault(); // Prevent navigation when clicking 'Add to Cart'
+    e.preventDefault(); // Prevent navigation
     addToCart(product);
+    toast.success(`${product.title} added to cart`, {
+      duration: 2000,
+      position: 'bottom-right',
+    });
   };
 
   return (

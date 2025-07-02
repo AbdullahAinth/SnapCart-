@@ -10,7 +10,6 @@ redirects = []
 publish = "C:\\Users\\Abdullah Ainth\\Snapcart\\Snapcart\\e-commerce-store\\build"
 publishOrigin = "ui"
 commandOrigin = "ui"
-base = "C:\\Users\\Abdullah Ainth\\Snapcart\\Snapcart\\e-commerce-store"
 command = "npm run build"
 
 [build.environment]

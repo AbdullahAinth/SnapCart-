@@ -2,90 +2,130 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 40px;
+    padding: 15px 30px;
     background-color: var(--header-background);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    color: var(--text-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
     z-index: 1000;
-    transition: background-color 0.3s ease;
   }
   
   .logo {
-    font-size: 1.8em;
-    font-weight: 700;
+    font-size: 1.8rem;
+    font-weight: bold;
     color: var(--text-color);
     text-decoration: none;
-    transition: color 0.3s ease;
   }
   
   .navLinks {
-    list-style: none;
     display: flex;
-    gap: 25px;
-    margin: 0;
-    padding: 0;
-    align-items: center;
-    flex-wrap: wrap;
+    gap: 20px;
+    list-style: none;
   }
   
-  .navLinks li a {
-    color: var(--text-color);
+  .navLinks li {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navLinks a {
     text-decoration: none;
+    color: var(--text-color);
     font-weight: 500;
-    transition: color 0.3s ease;
-  }
-  
-  .navLinks li a:hover {
-    color: #FF6B6B;
-  }
-  
-  .cartLink {
-    background-color: #FF6B6B;
-    color: white !important;
-    padding: 8px 14px;
+    padding: 8px 12px;
     border-radius: 5px;
-    font-weight: 600;
-    font-size: 0.95em;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
     transition: background-color 0.3s ease;
   }
   
-  .cartLink:hover {
-    background-color: #FF4B4B;
-    color: white !important;
+  .navLinks a:hover {
+    background-color: var(--card-background);
   }
   
   .themeToggle {
-    background: none;
+    background-color: transparent;
     border: 1px solid var(--border-color);
-    color: var(--text-color);
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
+    border-radius: 6px;
+    padding: 6px 12px;
     font-size: 0.9em;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: all 0.3s ease;
   }
   
   .themeToggle:hover {
-    background-color: var(--border-color);
+    background-color: var(--filter-background);
+    border-color: #FF6B6B;
   }
   
-  /* Optional: Responsive navbar */
+  /* Hamburger menu (mobile only) */
+  .hamburger {
+    display: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--text-color);
+  }
+  .cartLink {
+    position: relative;
+  }
+  
+  .cartIcon {
+    font-size: 1.3rem;
+    color: var(--text-color);
+  }
+  
+  .cartBadge {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: #FF6B6B;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    animation: pop 0.3s ease-out;
+  }
+  
+  /* Animation for popping effect */
+  @keyframes pop {
+    0% {
+      transform: scale(0.5);
+      opacity: 0;
+    }
+    70% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  /* Mobile Navigation */
   @media (max-width: 768px) {
-    .navbar {
-      flex-direction: column;
-      padding: 10px 20px;
+    .hamburger {
+      display: block;
     }
   
     .navLinks {
+      position: absolute;
+      top: 70px;
+      left: 0;
+      right: 0;
+      background-color: var(--header-background);
       flex-direction: column;
+      align-items: center;
       gap: 15px;
-      margin-top: 10px;
+      padding: 20px 0;
+      display: none;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
+  
+    .navLinks.active {
+      display: flex;
+    }
+    
   }
+  
