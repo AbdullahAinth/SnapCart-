@@ -1,7 +1,10 @@
+// src/pages/ProductListingPage/ProductListingPage.js
 import React, { useEffect, useState } from 'react';
 import ProductCard from '../../components/ProductCard/ProductCard';
+import ProductCardSkeleton from '../../components/ProductCardSkeleton/ProductCardSkeleton';
 import { getProducts, getCategories, getProductsByCategory } from '../../api/product';
 import styles from './ProductListingPage.module.css';
+import HeroSection from '../../components/HeroSection/HeroSection';
 
 const ProductListingPage = () => {
   const [products, setProducts] = useState([]);
@@ -9,7 +12,7 @@ const ProductListingPage = () => {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
 
@@ -21,7 +24,7 @@ const ProductListingPage = () => {
         const productsData = await getProducts();
         setProducts(productsData);
         const categoriesData = await getCategories();
-        setCategories(['All', ...categoriesData]); // Add 'All' option
+        setCategories(['All', ...categoriesData]);
       } catch (err) {
         setError("Failed to fetch products or categories.");
         console.error(err);
@@ -29,32 +32,39 @@ const ProductListingPage = () => {
         setLoading(false);
       }
     };
-
     fetchProductsAndCategories();
   }, []);
 
   useEffect(() => {
     const filterProducts = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        let fetchedProducts = [];
-        if (selectedCategory && selectedCategory !== 'All') {
-          fetchedProducts = await getProductsByCategory(selectedCategory);
-        } else {
-          fetchedProducts = await getProducts();
+        setLoading(true);
+        setError(null);
+        try {
+            let fetchedProducts = [];
+            if (selectedCategory && selectedCategory !== 'All') {
+                fetchedProducts = await getProductsByCategory(selectedCategory);
+            } else {
+                fetchedProducts = await getProducts();
+            }
+            setProducts(fetchedProducts);
+        } catch (err) {
+            setError("Failed to fetch products for the selected category.");
+            console.error(err);
+        } finally {
+            setLoading(false);
         }
-        setProducts(fetchedProducts);
-      } catch (err) {
-        setError("Failed to fetch products for the selected category.");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
     };
-
     filterProducts();
   }, [selectedCategory]);
+
+
+  const filteredProducts = products.filter(product => {
+    const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesMinPrice = minPrice === '' || product.price >= parseFloat(minPrice);
+    const matchesMaxPrice = maxPrice === '' || product.price <= parseFloat(maxPrice);
+
+    return matchesSearch && matchesMinPrice && matchesMaxPrice;
+  });
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -72,19 +82,12 @@ const ProductListingPage = () => {
     setMaxPrice(e.target.value);
   };
 
-
-  const filteredProducts = products.filter(product => {
-    const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesMinPrice = minPrice === '' || product.price >= parseFloat(minPrice);
-    const matchesMaxPrice = maxPrice === '' || product.price <= parseFloat(maxPrice);
-    return matchesSearch && matchesMinPrice && matchesMaxPrice;
-  });
-
-  if (loading) return <div className={styles.loading}>Loading products...</div>;
   if (error) return <div className={styles.error}>Error: {error}</div>;
 
   return (
     <div className={styles.listingPage}>
+      <HeroSection />
+
       <h1>Products</h1>
       <div className={styles.filters}>
         <input
@@ -95,7 +98,7 @@ const ProductListingPage = () => {
           className="input"
         />
         <select onChange={handleCategoryChange} value={selectedCategory} className="input">
-          {categories.map(category => (
+          {categories.map((category) => (
             <option key={category} value={category}>
               {category.charAt(0).toUpperCase() + category.slice(1)}
             </option>
@@ -116,15 +119,22 @@ const ProductListingPage = () => {
           className="input"
         />
       </div>
-      <div className={styles.productList}>
-        {filteredProducts.length > 0 ? (
-          filteredProducts.map(product => (
+
+      {loading ? (
+        <div className={styles.productlist}>
+          {[...Array(8)].map((_, index) => (
+            <ProductCardSkeleton key={index} />
+          ))}
+        </div>
+      ) : filteredProducts.length > 0 ? (
+        <div className={styles.productlist}>
+          {filteredProducts.map(product => (
             <ProductCard key={product.id} product={product} />
-          ))
-        ) : (
-          <p>No products found matching your criteria.</p>
-        )}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <p>No products found matching your criteria.</p>
+      )}
     </div>
   );
 };

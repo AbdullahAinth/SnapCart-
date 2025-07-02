@@ -1,0 +1,23 @@
+.ratingContainer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: inherit;
+  }
+  
+  .stars {
+    display: flex;
+    align-items: center;
+  }
+  
+  .starIcon {
+    color: #FFD700; /* Gold */
+    font-size: 1.2em;
+    margin-right: 2px;
+  }
+  
+  .ratingCount {
+    font-size: 0.9em;
+    color: #777;
+    margin-left: 2px;
+  }  

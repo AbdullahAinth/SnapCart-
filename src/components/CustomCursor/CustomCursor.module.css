@@ -1,0 +1,33 @@
+/* src/components/CustomCursor/CustomCursor.module.css */
+
+.customCursor {
+    position: fixed;
+    pointer-events: none; /* Crucial: allows clicks to pass through */
+    transform: translate(-50%, -50%); /* Centers the cursor on the mouse point */
+    z-index: 9999; /* Ensures it's always on top */
+  
+    /* --- Default Black Dot Styles --- */
+    width: 8px;
+    height: 8px;
+    background-color: black; /* <-- CHANGED TO BLACK */
+    border-radius: 50%;
+    opacity: 1;
+    
+    transition: width 0.3s cubic-bezier(0.2, 0.8, 0.4, 1),
+                height 0.3s cubic-bezier(0.2, 0.8, 0.4, 1),
+                background-color 0.3s ease,
+                transform 0.1s ease-out;
+    
+    mix-blend-mode: normal;
+    filter: none;
+    border: none;
+  }
+  
+  /* --- Hovered State Styles (when over interactive elements) --- */
+  .customCursor.hovered {
+    width: 35px;
+    height: 35px;
+    background-color: transparent; /* Becomes transparent to show a ring */
+    border: 2px solid #FFB643; /* Your orange accent color for the ring */
+    mix-blend-mode: difference; /* Optional: Apply difference blend mode on hover for cool effect */
+  }

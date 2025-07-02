@@ -1,43 +1,163 @@
-body {
+/* src/index.css */
+
+/* ---------------------------------------
+   📦 Import Fonts
+---------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* ---------------------------------------
+   🎨 Light Theme (default)
+---------------------------------------- */
+:root {
+  --background-color: #f0f2f5;
+  --text-color: #333;
+  --card-background: #ffffff;
+  --border-color: #e0e0e0;
+  --header-background: #ffffff;
+  --link-color: #007bff;
+  --filter-background: #ffffff;
+  --input-border-color: #ccc;
+  --input-focus-shadow: rgba(255, 107, 107, 0.2);
+}
+
+/* ---------------------------------------
+   🌙 Dark Theme
+---------------------------------------- */
+body[data-theme='dark'] {
+  --background-color: #1a1a2e;
+  --text-color: #e0e0e0;
+  --card-background: #2a2a4a;
+  --border-color: #3f3f5a;
+  --header-background: #20203a;
+  --link-color: #8be9fd;
+  --filter-background: #2a2a4a;
+  --input-border-color: #555;
+  --input-focus-shadow: rgba(139, 233, 253, 0.2);
+}
+
+/* ---------------------------------------
+   🧱 Base Reset & Typography
+---------------------------------------- */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f4f4f4;
+  cursor: none; /* Hide default cursor for custom */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
 }
 
-/* Basic Reset & Utility Classes (optional, but good practice) */
+/* ---------------------------------------
+   🧩 Layout Utility
+---------------------------------------- */
 .container {
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  margin: 20px auto;
+  padding: 0 20px;
 }
 
+/* ---------------------------------------
+   🔘 Buttons (Gen Z Style)
+---------------------------------------- */
 .button {
-  background-color: #007bff;
+  background: linear-gradient(45deg, #FF6B6B, #FFB643);
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: 12px 25px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
+  font-size: 1.1em;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
 }
 
 .button:hover {
-  background-color: #0056b3;
+  background: linear-gradient(45deg, #FF4B4B, #FFA31A);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
+.button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* ---------------------------------------
+   📝 Input Fields
+---------------------------------------- */
 .input {
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--input-border-color);
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 1em;
+  width: 100%;
+  background-color: var(--card-background);
+  color: var(--text-color);
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.input:focus {
+  border-color: #FF6B6B;
+  outline: none;
+  box-shadow: 0 0 0 3px var(--input-focus-shadow);
+}
+
+/* ---------------------------------------
+   🔗 Links
+---------------------------------------- */
+a {
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ---------------------------------------
+   🧪 Code Blocks
+---------------------------------------- */
+code {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* ---------------------------------------
+   🔄 Animations (fallback from CRA)
+---------------------------------------- */
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

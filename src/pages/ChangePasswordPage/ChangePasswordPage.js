@@ -1,7 +1,7 @@
 // src/pages/ChangePasswordPage/ChangePasswordPage.js
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
-import styles from './ChangePasswordPage.module.css'; // Create this CSS module too
+import styles from './ChangePasswordPage.module.css';
 
 const ChangePasswordPage = () => {
   const [currentPassword, setCurrentPassword] = useState('');
@@ -34,7 +34,7 @@ const ChangePasswordPage = () => {
             value={currentPassword}
             onChange={(e) => setCurrentPassword(e.target.value)}
             required
-            className="input"
+            className="input" /* This class will pick up global input styles */
           />
         </div>
         <div className={styles.formGroup}>
@@ -45,7 +45,7 @@ const ChangePasswordPage = () => {
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             required
-            className="input"
+            className="input" /* This class will pick up global input styles */
           />
         </div>
         <div className={styles.formGroup}>
@@ -56,9 +56,10 @@ const ChangePasswordPage = () => {
             value={confirmNewPassword}
             onChange={(e) => setConfirmNewPassword(e.target.value)}
             required
-            className="input"
+            className="input" /* This class will pick up global input styles */
           />
         </div>
+        {/* Using the global .button class */}
         <button type="submit" className="button">
           Change Password
         </button>

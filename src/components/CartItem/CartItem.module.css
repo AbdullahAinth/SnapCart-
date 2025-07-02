@@ -7,6 +7,7 @@
     margin-bottom: 15px;
     background-color: white;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    flex-wrap: wrap; /* Allows better responsiveness */
   }
   
   .itemImage {
@@ -16,10 +17,12 @@
     margin-right: 15px;
     border: 1px solid #eee;
     border-radius: 4px;
+    flex-shrink: 0;
   }
   
   .itemDetails {
     flex-grow: 1;
+    min-width: 150px;
   }
   
   .itemTitle {
@@ -39,6 +42,7 @@
     align-items: center;
     gap: 10px;
     margin-left: 20px;
+    flex-wrap: wrap;
   }
   
   .quantityInput {
@@ -71,3 +75,4 @@
     min-width: 80px;
     text-align: right;
   }
+  

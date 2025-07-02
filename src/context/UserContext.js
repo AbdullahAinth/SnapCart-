@@ -5,31 +5,35 @@ import toast from 'react-hot-toast';
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  // Mock login state. In a real app, this would come from an API/token.
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    // Check localStorage for a mock login status
+  const getInitialLoginState = () => {
     try {
-      const loggedInStatus = localStorage.getItem('isLoggedIn');
-      return loggedInStatus === 'true'; // Convert string to boolean
-    } catch (error) {
-      console.error("Failed to read login status from localStorage", error);
+      return localStorage.getItem('isLoggedIn') === 'true';
+    } catch (err) {
+      console.error('Failed to access localStorage for isLoggedIn:', err);
       return false;
     }
-  });
-  const [userName, setUserName] = useState(() => {
+  };
+
+  const getInitialUserName = () => {
     try {
       return localStorage.getItem('userName') || 'Guest';
-    } catch (error) {
+    } catch (err) {
+      console.error('Failed to access localStorage for userName:', err);
       return 'Guest';
     }
-  });
+  };
 
-  // Persist login state to localStorage
+  const [isLoggedIn, setIsLoggedIn] = useState(getInitialLoginState);
+  const [userName, setUserName] = useState(getInitialUserName);
+
   useEffect(() => {
-    localStorage.setItem('isLoggedIn', isLoggedIn);
-    localStorage.setItem('userName', userName);
+    try {
+      localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+      localStorage.setItem('userName', userName);
+    } catch (err) {
+      console.error('Failed to write to localStorage:', err);
+    }
   }, [isLoggedIn, userName]);
-
 
   const login = (mockUsername = 'User') => {
     setIsLoggedIn(true);
@@ -37,12 +41,15 @@ export const UserProvider = ({ children }) => {
     toast.success(`Welcome, ${mockUsername}! You are logged in.`);
   };
 
-  const logout = () => {
+  const logout = (onLogoutCallback) => {
     setIsLoggedIn(false);
     setUserName('Guest');
-    toast.success("You have been logged out.");
-    // Optionally clear cart on logout
-    // const { clearCart } = useCart(); // Would need to import useCart here or pass it down
+    toast.success('You have been logged out.');
+
+    // Optional callback for actions like clearing cart or redirecting
+    if (typeof onLogoutCallback === 'function') {
+      onLogoutCallback();
+    }
   };
 
   return (
@@ -52,6 +59,4 @@ export const UserProvider = ({ children }) => {
   );
 };
 
-export const useUser = () => {
-  return useContext(UserContext);
-};
+export const useUser = () => useContext(UserContext);

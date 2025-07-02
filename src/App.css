@@ -1,10 +1,18 @@
+:root {
+  --primary-bg: #282c34;
+  --primary-text: white;
+  --link-color: #61dafb;
+  --logo-size: 40vmin;
+}
+
 .App {
   text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
+  height: var(--logo-size);
   pointer-events: none;
+  transition: transform 0.3s ease;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -14,18 +22,25 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: var(--primary-bg);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: var(--primary-text);
+  padding: 20px;
 }
 
 .App-link {
-  color: #61dafb;
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.App-link:hover {
+  color: #21a1f1;
 }
 
 @keyframes App-logo-spin {

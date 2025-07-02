@@ -1,32 +1,51 @@
 // src/pages/MyOrdersPage/MyOrdersPage.js
 import React from 'react';
-import styles from './MyOrdersPage.module.css'; // Create this CSS module too
+import styles from './MyOrdersPage.module.css';
 
 const MyOrdersPage = () => {
+  const mockOrders = [
+    {
+      id: '12345',
+      date: 'July 1, 2025',
+      total: 150.0,
+      items: [
+        { name: 'Product A', qty: 1 },
+        { name: 'Product B', qty: 2 },
+      ],
+    },
+    {
+      id: '12346',
+      date: 'June 15, 2025',
+      total: 75.5,
+      items: [
+        { name: 'Product C', qty: 1 },
+      ],
+    },
+  ];
+
   return (
     <div className={styles.myOrdersPage}>
       <h1>My Orders</h1>
       <p>This is where your order history would be displayed.</p>
+
       <div className={styles.mockOrders}>
-        <div className={styles.orderCard}>
-          <h3>Order #12345</h3>
-          <p>Date: July 1, 2025</p>
-          <p>Total: $150.00</p>
-          <ul>
-            <li>Product A (x1)</li>
-            <li>Product B (x2)</li>
-          </ul>
-        </div>
-        <div className={styles.orderCard}>
-          <h3>Order #12346</h3>
-          <p>Date: June 15, 2025</p>
-          <p>Total: $75.50</p>
-          <ul>
-            <li>Product C (x1)</li>
-          </ul>
-        </div>
+        {mockOrders.map((order) => (
+          <div key={order.id} className={styles.orderCard}>
+            <h3>Order #{order.id}</h3>
+            <p><strong>Date:</strong> {order.date}</p>
+            <p><strong>Total:</strong> ${order.total.toFixed(2)}</p>
+            <ul>
+              {order.items.map((item, index) => (
+                <li key={index}>{item.name} (x{item.qty})</li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
-      <p>Login status: (This section is for mock data, no real orders yet.)</p>
+
+      <p className={styles.disclaimer}>
+        <em>Note:</em> This is mock data. Real orders will appear here once implemented.
+      </p>
     </div>
   );
 };

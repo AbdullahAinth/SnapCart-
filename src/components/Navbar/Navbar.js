@@ -1,67 +1,37 @@
 // src/components/Navbar/Navbar.js
-import React, { useState } from 'react'; // Import useState
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
-import { useUser } from '../../context/UserContext'; // <-- NEW
+import { useTheme } from '../../context/ThemeContext';
 import styles from './Navbar.module.css';
 
 const Navbar = () => {
   const { getCartItemCount } = useCart();
-  const { isLoggedIn, userName, logout, login } = useUser(); // <-- NEW
-  const itemCount = getCartItemCount();
-
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State for dropdown
-
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-
-  const handleLogout = () => {
-    logout();
-    setIsDropdownOpen(false); // Close dropdown after logout
-  };
-
-  // Simple mock login for demonstration
-  const handleLogin = () => {
-    login('MockUser'); // You can pass any mock username
-  };
+  const { theme, toggleTheme } = useTheme();
 
   return (
-    <nav className={styles.navbar}>
-      <div className={styles.container}>
-        <Link to="/" className={styles.logo}>
-          Snapcart {/* Updated name */}
-        </Link>
-        <ul className={styles.navLinks}>
-          <li>
-            <Link to="/">Products</Link>
-          </li>
-          <li>
-            <Link to="/cart" className={styles.cartLink}>
-              Cart ({itemCount})
-            </Link>
-          </li>
-          <li className={styles.profileSection}> {/* New list item for profile */}
-            {isLoggedIn ? (
-              <div className={styles.profileDropdownToggle} onClick={toggleDropdown}>
-                Hi, {userName} ▼
-              </div>
-            ) : (
-              <button onClick={handleLogin} className={styles.loginButton}>
-                Login
-              </button>
-            )}
+    <nav className={styles.navbar} role="navigation" aria-label="Main Navigation">
+      <Link to="/" className={styles.logo}>SnapCart</Link>
 
-            {isLoggedIn && isDropdownOpen && (
-              <div className={styles.dropdownMenu}>
-                <Link to="/my-orders" onClick={() => setIsDropdownOpen(false)}>My Orders</Link>
-                <Link to="/change-password" onClick={() => setIsDropdownOpen(false)}>Change Password</Link>
-                <button onClick={handleLogout}>Logout</button>
-              </div>
-            )}
-          </li>
-        </ul>
-      </div>
+      <ul className={styles.navLinks}>
+        <li><Link to="/">Products</Link></li>
+        <li><Link to="/my-orders">My Orders</Link></li>
+        <li><Link to="/change-password">Change Password</Link></li>
+        <li>
+          <Link to="/cart" className={styles.cartLink}>
+            🛒 Cart ({getCartItemCount()})
+          </Link>
+        </li>
+        <li>
+          <button
+            onClick={toggleTheme}
+            className={styles.themeToggle}
+            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+          >
+            {theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'}
+          </button>
+        </li>
+      </ul>
     </nav>
   );
 };

@@ -1,20 +1,22 @@
 /* src/pages/MyOrdersPage/MyOrdersPage.module.css */
+
 .myOrdersPage {
     padding: 30px;
     text-align: center;
-    background-color: white;
+    background-color: var(--card-background, white);
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 30px;
+    margin: 30px auto;
+    max-width: 1200px;
   }
   
   .myOrdersPage h1 {
-    color: #333;
+    color: var(--text-color, #333);
     margin-bottom: 25px;
   }
   
   .myOrdersPage p {
-    color: #666;
+    color: var(--muted-text-color, #666);
     font-size: 1.1em;
     margin-bottom: 20px;
   }
@@ -32,9 +34,15 @@
     border-radius: 8px;
     padding: 20px;
     width: 280px;
-    background-color: #f9f9f9;
+    background-color: var(--background-light, #f9f9f9);
     text-align: left;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .orderCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
   
   .orderCard h3 {
@@ -61,3 +69,10 @@
     margin-bottom: 3px;
     font-size: 0.9em;
   }
+  
+  .disclaimer {
+    margin-top: 40px;
+    font-size: 0.95em;
+    color: #888;
+  }
+  

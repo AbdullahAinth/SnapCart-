@@ -27,7 +27,10 @@ const CartItem = ({ item }) => {
           onChange={handleQuantityChange}
           className={styles.quantityInput}
         />
-        <button onClick={() => removeFromCart(item.id)} className={styles.removeButton}>
+        <button
+          onClick={() => removeFromCart(item.id)}
+          className={styles.removeButton}
+        >
           Remove
         </button>
       </div>

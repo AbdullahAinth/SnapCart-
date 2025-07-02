@@ -1,3 +1,4 @@
+// src/pages/CheckoutPage/CheckoutPage.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
@@ -5,40 +6,52 @@ import toast from 'react-hot-toast';
 import styles from './CheckoutPage.module.css';
 
 const CheckoutPage = () => {
-  const { cartItems, getTotalPrice, clearCart } = useCart();
+  const { cart, getTotalPrice, clearCart } = useCart();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: '',
     address: '',
     email: '',
-    paymentMethod: 'credit_card', // Default payment method
+    paymentMethod: 'credit_card',
+    cardNumber: '',
+    expiryDate: '',
+    cvv: '',
   });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (cartItems.length === 0) {
+    if (cart.length === 0) {
       toast.error("Your cart is empty. Please add items before checking out.");
-      navigate('/');
-      return;
+      return navigate('/');
+    }
+
+    // Basic validation for required fields
+    const { name, address, email, paymentMethod, cardNumber, expiryDate, cvv } = formData;
+    if (!name.trim() || !address.trim() || !email.trim()) {
+      return toast.error("Please fill out all required fields.");
+    }
+
+    if (paymentMethod === 'credit_card' && (!cardNumber || !expiryDate || !cvv)) {
+      return toast.error("Please enter all credit card details.");
     }
 
     // Mock order processing
     console.log("Order placed:", {
-      items: cartItems,
+      items: cart,
       total: getTotalPrice(),
       customerInfo: formData,
     });
 
     toast.success("Order placed successfully! Thank you for your purchase.");
-    clearCart(); // Clear the cart after successful checkout
-    navigate('/'); // Redirect to home page
+    clearCart();
+    navigate('/');
   };
 
   return (
@@ -47,13 +60,13 @@ const CheckoutPage = () => {
       <div className={styles.checkoutContent}>
         <div className={styles.orderSummary}>
           <h2>Order Summary</h2>
-          {cartItems.length === 0 ? (
+          {cart.length === 0 ? (
             <p>Your cart is empty.</p>
           ) : (
             <ul>
-              {cartItems.map((item) => (
+              {cart.map((item) => (
                 <li key={item.id}>
-                  {item.title} (x{item.quantity}) - ${item.price.toFixed(2)}
+                  {item.title} (x{item.qty}) - ${item.price.toFixed(2)}
                 </li>
               ))}
             </ul>
@@ -75,7 +88,7 @@ const CheckoutPage = () => {
               value={formData.name}
               onChange={handleInputChange}
               required
-              className="input"
+              className={styles.input}
             />
           </div>
           <div className={styles.formGroup}>
@@ -87,7 +100,7 @@ const CheckoutPage = () => {
               value={formData.address}
               onChange={handleInputChange}
               required
-              className="input"
+              className={styles.input}
             />
           </div>
           <div className={styles.formGroup}>
@@ -99,7 +112,7 @@ const CheckoutPage = () => {
               value={formData.email}
               onChange={handleInputChange}
               required
-              className="input"
+              className={styles.input}
             />
           </div>
 
@@ -111,32 +124,58 @@ const CheckoutPage = () => {
               name="paymentMethod"
               value={formData.paymentMethod}
               onChange={handleInputChange}
-              className="input"
+              className={styles.input}
             >
               <option value="credit_card">Credit Card (Mock)</option>
               <option value="paypal">PayPal (Mock)</option>
-              {/* Add more mock payment options */}
             </select>
           </div>
+
           {formData.paymentMethod === 'credit_card' && (
             <>
               <div className={styles.formGroup}>
                 <label htmlFor="cardNumber">Card Number</label>
-                <input type="text" id="cardNumber" name="cardNumber" placeholder="**** **** **** ****" className="input" required />
+                <input
+                  type="text"
+                  id="cardNumber"
+                  name="cardNumber"
+                  placeholder="**** **** **** ****"
+                  value={formData.cardNumber}
+                  onChange={handleInputChange}
+                  className={styles.input}
+                  required
+                />
               </div>
               <div className={styles.formGroup}>
                 <label htmlFor="expiryDate">Expiry Date</label>
-                <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" className="input" required />
+                <input
+                  type="text"
+                  id="expiryDate"
+                  name="expiryDate"
+                  placeholder="MM/YY"
+                  value={formData.expiryDate}
+                  onChange={handleInputChange}
+                  className={styles.input}
+                  required
+                />
               </div>
               <div className={styles.formGroup}>
                 <label htmlFor="cvv">CVV</label>
-                <input type="text" id="cvv" name="cvv" placeholder="123" className="input" required />
+                <input
+                  type="text"
+                  id="cvv"
+                  name="cvv"
+                  placeholder="123"
+                  value={formData.cvv}
+                  onChange={handleInputChange}
+                  className={styles.input}
+                  required
+                />
               </div>
             </>
           )}
 
-
-          <button type="submit" className={`${styles.placeOrderButton} button`}>
+          <button type="submit" className={styles.placeOrderButton}>
             Place Order
           </button>
         </form>
