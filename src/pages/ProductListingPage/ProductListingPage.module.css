@@ -72,3 +72,35 @@
     margin-top: 20px;
   }
   
+  /* ✅ Pagination Styles */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .pageButton {
+    padding: 8px 14px;
+    font-size: 1em;
+    border: 1px solid var(--input-border-color);
+    border-radius: 6px;
+    background-color: var(--card-background);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .pageButton:hover {
+    background-color: #FF6B6B;
+    color: #fff;
+    border-color: #FF6B6B;
+  }
+  
+  .active {
+    background-color: #FF6B6B;
+    color: #fff;
+    border-color: #FF6B6B;
+  }
+  

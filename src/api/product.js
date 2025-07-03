@@ -1,16 +1,19 @@
-const BASE_URL = 'https://fakestoreapi.com';
+const BASE_URL = 'https://dummyjson.com';
 
-export const getProducts = async () => {
+export const getProducts = async (limit = 12, skip = 0) => {
   try {
-    const response = await fetch(`${BASE_URL}/products`);
+    const response = await fetch(`${BASE_URL}/products?limit=${limit}&skip=${skip}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    return data;
+    return {
+      products: data.products,
+      total: data.total
+    }; // Include total for pagination
   } catch (error) {
     console.error("Error fetching products:", error);
-    return [];
+    return { products: [], total: 0 };
   }
 };
 
@@ -42,16 +45,19 @@ export const getCategories = async () => {
   }
 };
 
-export const getProductsByCategory = async (category) => {
+export const getProductsByCategory = async (category, limit = 12, skip = 0) => {
   try {
-    const response = await fetch(`${BASE_URL}/products/category/${category}`);
+    const response = await fetch(`${BASE_URL}/products/category/${category}?limit=${limit}&skip=${skip}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    return data;
+    return {
+      products: data.products,
+      total: data.total
+    };
   } catch (error) {
     console.error(`Error fetching products for category ${category}:`, error);
-    return [];
+    return { products: [], total: 0 };
   }
 };

@@ -38,7 +38,7 @@ const ProductDetailPage = () => {
     <div className={styles.detailPage}>
       <div className={styles.imageContainer}>
         <img
-          src={product.image}
+          src={product.thumbnail}
           alt={product.title}
           className={styles.productImage}
         />
@@ -49,8 +49,13 @@ const ProductDetailPage = () => {
         <p className={styles.productCategory}>Category: {product.category}</p>
 
         <div className={styles.productRating}>
-          <RatingStars rating={product.rating?.rate || 0} count={product.rating?.count} />
-          <span className={styles.ratingText}>{product.rating?.rate || 0} / 5</span>
+          <RatingStars 
+            rating={typeof product.rating === 'number' ? product.rating : product.rating?.rate || 0} 
+            count={product.rating?.count || 0} 
+          />
+          <span className={styles.ratingText}>
+            {typeof product.rating === 'number' ? product.rating : product.rating?.rate || 0} / 5
+          </span>
         </div>
 
         <p className={styles.productPrice}>${product.price.toFixed(2)}</p>

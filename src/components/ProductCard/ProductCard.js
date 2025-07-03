@@ -23,14 +23,17 @@ const ProductCard = ({ product }) => {
       <Link to={`/product/${product.id}`} className={styles.productLink}>
         <div className={styles.imageContainer}>
           <img
-            src={product.image}
+            src={product.thumbnail}
             alt={product.title}
             className={styles.productImage}
           />
         </div>
         <h3 className={styles.productTitle}>{product.title}</h3>
         <p className={styles.productCategory}>{product.category}</p>
-        <RatingStars rating={product.rating.rate} count={product.rating.count} />
+        <RatingStars 
+          rating={typeof product.rating === 'number' ? product.rating : product.rating.rate} 
+          count={product.rating?.count || 0} 
+        />
         <p className={styles.productPrice}>${product.price.toFixed(2)}</p>
       </Link>
       <button
