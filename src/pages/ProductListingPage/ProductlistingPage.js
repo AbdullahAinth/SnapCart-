@@ -47,7 +47,7 @@ const ProductListingPage = () => {
   }, [selectedCategory, currentPage]);
 
   useEffect(() => {
-    setCurrentPage(1); // Reset to first page when category changes
+    setCurrentPage(1);
   }, [selectedCategory]);
 
   const filteredProducts = products.filter(product => {
@@ -57,14 +57,32 @@ const ProductListingPage = () => {
     return matchesSearch && matchesMinPrice && matchesMaxPrice;
   });
 
+  const totalPages = Math.ceil(totalProducts / productsPerPage);
+
   const handleSearchChange = (e) => setSearchTerm(e.target.value);
   const handleCategoryChange = (e) => setSelectedCategory(e.target.value);
   const handleMinPriceChange = (e) => setMinPrice(e.target.value);
   const handleMaxPriceChange = (e) => setMaxPrice(e.target.value);
 
-  const totalPages = Math.ceil(totalProducts / productsPerPage);
+  const renderPageButtons = () => {
+    const buttons = [];
+    const start = Math.max(1, currentPage - 1);
+    const end = Math.min(totalPages, currentPage + 2);
 
-  if (error) return <div className={styles.error}>Error: {error}</div>;
+    for (let page = start; page <= end; page++) {
+      buttons.push(
+        <button
+          key={page}
+          onClick={() => setCurrentPage(page)}
+          className={`${styles.pageButton} ${currentPage === page ? styles.active : ''}`}
+        >
+          {page}
+        </button>
+      );
+    }
+
+    return buttons;
+  };
 
   return (
     <div className={styles.listingPage}>
@@ -119,15 +137,23 @@ const ProductListingPage = () => {
           </div>
 
           <div className={styles.pagination}>
-            {Array.from({ length: totalPages }, (_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentPage(index + 1)}
-                className={`${styles.pageButton} ${currentPage === index + 1 ? styles.active : ''}`}
-              >
-                {index + 1}
-              </button>
-            ))}
+            <button
+              className={styles.pageButton}
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+            >
+              &laquo; Prev
+            </button>
+
+            {renderPageButtons()}
+
+            <button
+              className={styles.pageButton}
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}
+            >
+              Next &raquo;
+            </button>
           </div>
         </>
       ) : (
