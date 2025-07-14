@@ -3,10 +3,10 @@ import ProductCard from '../../components/ProductCard/ProductCard';
 import ProductCardSkeleton from '../../components/ProductCardSkeleton/ProductCardSkeleton';
 import { getProducts, getCategories, getProductsByCategory } from '../../api/product';
 import styles from './ProductListingPage.module.css';
-import HeroSection from '../../components/HeroSection/HeroSection';
+import HeroSection from '../../components/New folder/HeroSection';
 
 const ProductListingPage = () => {
-  const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]); // store all
   const [loading, setLoading] = useState(true);
   const [, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -16,7 +16,6 @@ const ProductListingPage = () => {
   const [maxPrice, setMaxPrice] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 12;
-  const [totalProducts, setTotalProducts] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,16 +24,16 @@ const ProductListingPage = () => {
       try {
         let result;
         if (selectedCategory !== 'All') {
-          result = await getProductsByCategory(selectedCategory, productsPerPage, (currentPage - 1) * productsPerPage);
+          result = await getProductsByCategory(selectedCategory, 1000, 0);
         } else {
-          result = await getProducts(productsPerPage, (currentPage - 1) * productsPerPage);
+          result = await getProducts(1000, 0); // get all products
         }
-        setProducts(result.products);
-        setTotalProducts(result.total);
+        setAllProducts(result.products);
 
         const categoriesData = await getCategories();
         const filteredCategories = categoriesData.filter(c => typeof c === 'string');
         setCategories(['All', ...filteredCategories]);
+        setCurrentPage(1); // reset page on category change
       } catch (err) {
         console.error(err);
         setError("Failed to fetch products or categories.");
@@ -44,25 +43,36 @@ const ProductListingPage = () => {
     };
 
     fetchData();
-  }, [selectedCategory, currentPage]);
-
-  useEffect(() => {
-    setCurrentPage(1);
   }, [selectedCategory]);
 
-  const filteredProducts = products.filter(product => {
+  // FILTER ALL PRODUCTS
+  const filteredProducts = allProducts.filter(product => {
     const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesMinPrice = minPrice === '' || product.price >= parseFloat(minPrice);
     const matchesMaxPrice = maxPrice === '' || product.price <= parseFloat(maxPrice);
     return matchesSearch && matchesMinPrice && matchesMaxPrice;
   });
 
-  const totalPages = Math.ceil(totalProducts / productsPerPage);
+  // PAGINATE FILTERED RESULTS
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+  const paginatedProducts = filteredProducts.slice(
+    (currentPage - 1) * productsPerPage,
+    currentPage * productsPerPage
+  );
 
-  const handleSearchChange = (e) => setSearchTerm(e.target.value);
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1);
+  };
   const handleCategoryChange = (e) => setSelectedCategory(e.target.value);
-  const handleMinPriceChange = (e) => setMinPrice(e.target.value);
-  const handleMaxPriceChange = (e) => setMaxPrice(e.target.value);
+  const handleMinPriceChange = (e) => {
+    setMinPrice(e.target.value);
+    setCurrentPage(1);
+  };
+  const handleMaxPriceChange = (e) => {
+    setMaxPrice(e.target.value);
+    setCurrentPage(1);
+  };
 
   const renderPageButtons = () => {
     const buttons = [];
@@ -128,10 +138,10 @@ const ProductListingPage = () => {
             <ProductCardSkeleton key={index} />
           ))}
         </div>
-      ) : filteredProducts.length > 0 ? (
+      ) : paginatedProducts.length > 0 ? (
         <>
           <div className={styles.productlist}>
-            {filteredProducts.map(product => (
+            {paginatedProducts.map(product => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
