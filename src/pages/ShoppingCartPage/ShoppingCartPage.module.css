@@ -98,32 +98,40 @@
     min-width: 120px;
   }
   
-  .cartSummary {
-    border-top: 2px solid #eee;
-    padding-top: 20px;
-    text-align: right;
-  }
-  
-  .total {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 20px;
-    font-size: 1.5em;
-    color: var(--summary-text-color); /* ✨ Here */
-    margin-bottom: 20px;
-  }
-  
-  .checkoutButton {
-    padding: 15px 25px;
-    font-size: 1.1em;
-    background-color: #28a745;
-    color: white;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
+.cartSummary {
+  /* This is the key to solving the problem */
+  display: flex;
+  flex-direction: column; /* This stacks the children (total & button) vertically */
+  align-items: flex-end; /* This aligns all children to the right side */
+  gap: 20px; /* Adds space between the total and the button */
+
+  /* Your existing styles */
+  border-top: 2px solid #eee;
+  padding-top: 20px;
+}
+
+.total {
+  /* You can keep this, but the Flexbox properties above will handle the alignment */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+  font-size: 1.5em;
+  color: var(--summary-text-color);
+  margin-bottom: 0; /* Remove the old margin since `gap` handles the spacing now */
+}
+
+.checkoutButton {
+  /* Your existing styles, no changes needed here */
+  padding: 15px 25px;
+  font-size: 1.1em;
+  background-color: #28a745;
+  color: white;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
   
   .checkoutButton:hover {
     background-color: #218838;

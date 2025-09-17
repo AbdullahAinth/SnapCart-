@@ -1,23 +1,35 @@
+/* src/components/RatingStars/RatingStars.module.css */
 .ratingContainer {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-family: inherit;
-  }
-  
-  .stars {
-    display: flex;
-    align-items: center;
-  }
-  
-  .starIcon {
-    color: #FFD700; /* Gold */
-    font-size: 1.2em;
-    margin-right: 2px;
-  }
-  
-  .ratingCount {
-    font-size: 0.9em;
-    color: #777;
-    margin-left: 2px;
-  }  
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1rem;
+  color: var(--star-color, #ffc107); /* default yellow/gold */
+}
+
+.stars {
+  display: flex;
+  gap: 0.15rem;
+}
+
+.starIcon {
+  font-size: 1.2rem;
+  color: var(--star-color, #ffc107);
+  transition: transform 0.2s ease;
+}
+
+.ratingCount {
+  font-size: 0.95rem;
+  color: var(--text-secondary, #666);
+}
+
+/* Dark mode support via :root variables */
+:root {
+  --star-color: #ffc107;
+  --text-secondary: #666;
+}
+
+[data-theme='dark'] {
+  --star-color: #ffde6a;
+  --text-secondary: #ccc;
+}

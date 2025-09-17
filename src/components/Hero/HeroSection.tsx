@@ -1,0 +1,40 @@
+// src/components/Hero/HeroSection.tsx
+import React from 'react';
+import styles from './HeroSection.module.css';
+
+const HeroSection: React.FC = () => {
+  const handleShopClick = () => {
+    // For now, just log. In real app, navigate to products page.
+    console.log('Shop Now button clicked');
+  };
+
+  return (
+    <section
+      className={styles.heroSection}
+      aria-label="Welcome Section"
+      data-testid="hero-section"
+    >
+      {/* Decorative blobs */}
+      <div className={styles.blob1} aria-hidden="true"></div>
+      <div className={styles.blob2} aria-hidden="true"></div>
+      <div className={styles.blob3} aria-hidden="true"></div>
+
+      {/* Hero Content */}
+      <div className={styles.content}>
+        <h1>
+          Welcome to <span className={styles.brand}>SnapCart</span>!
+        </h1>
+        <p>Your one-stop shop for the latest trends and tech.</p>
+        <button
+          className={styles.ctaButton}
+          onClick={handleShopClick}
+          aria-label="Shop Now"
+        >
+          Shop Now
+        </button>
+      </div>
+    </section>
+  );
+};
+
+export default HeroSection;

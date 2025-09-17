@@ -1,0 +1,17 @@
+[
+    {
+      "username": "Abdullah123",
+      "password": "password123",
+      "name": "Abdullah Aziz"
+    },
+    {
+      "username": "ABCcoder",
+      "password": "passcode",
+      "name": "ABC"
+    },
+    {
+      "username": "GuestTester",
+      "password": "test",
+      "name": "Guest User"
+    }
+  ]
